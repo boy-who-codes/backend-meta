@@ -10,7 +10,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from django.conf import settings
+
 
 
 def lead_form(request):
