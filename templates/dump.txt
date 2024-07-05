@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Website</title>
+     <head>
+    <!-- Meta Tags -->
+    {% if seo.meta_description %}
+        <meta name="description" content="{{ seo.meta_description }}">
+    {% endif %}
+    {% if seo.meta_keywords %}
+        <meta name="keywords" content="{{ seo.meta_keywords }}">
+    {% endif %}
+    {% if seo.meta_author %}
+        <meta name="author" content="{{ seo.meta_author }}">
+    {% endif %}
+
+    <!-- Open Graph (OG) Tags -->
+    {% if seo.og_title %}
+        <meta property="og:title" content="{{ seo.og_title }}">
+    {% endif %}
+    {% if seo.og_description %}
+        <meta property="og:description" content="{{ seo.og_description }}">
+    {% endif %}
+    {% if seo.og_image %}
+        <meta property="og:image" content="{{ seo.og_image.url }}">
+    {% endif %}
+
+    <!-- Favicon and Apple Touch Icon -->
+    {% if seo.favicon %}
+        <link rel="icon" href="{{ seo.favicon.url }}" type="image/x-icon">
+    {% endif %}
+    {% if seo.apple_touch_icon %}
+        <link rel="apple-touch-icon" href="{{ seo.apple_touch_icon.url }}">
+    {% endif %}
+
+    <!-- PWA Settings -->
+    {% if seo.pwa_enabled %}
+        <meta name="theme-color" content="#ffffff">
+        <meta name="application-name" content="{{ seo.pwa_name }}">
+        <meta name="apple-mobile-web-app-title" content="{{ seo.pwa_short_name }}">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <link rel="manifest" href="manifest.json">
+        {% if seo.pwa_icon %}
+            <link rel="icon" type="image/png" href="{{ seo.pwa_icon.url }}">
+        {% endif %}
+    {% endif %}
+
+    <!-- Custom Head Tags -->
+    {% if seo.custom_head_tags %}
+        {{ seo.custom_head_tags|safe }}
+    {% endif %}
+</head>
+<body>
+
+<nav>
+    <ul>
+        {% for menu_link in menu_links %}
+            <li>
+                <a href="{{ menu_link.get_link_url }}">{{ menu_link.title }}</a>
+                {% if menu_link.has_submenu %}
+                    <ul>
+                        {% for submenu_link in menu_link.submenus.all %}
+                            <li><a href="{{ submenu_link.get_link_url }}">{{ submenu_link.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
+<h1>Our Clients</h1>
+<div class="client-logos">
+    {% for client in clients %}
+        <img src="{{ client.image.url }}" alt="{{ client.name }}" width="100" height="auto">
+    {% empty %}
+        <p>No clients added yet.</p>
+    {% endfor %}
+</div>
+<br>
+<h1>Numbers and Texts</h1>
+<div class="numbers">
+    {% for number in numbers %}
+        <p><strong>{{ number.number }}</strong>: {{ number.text }}</p>
+    {% endfor %}
+</div>
+<br>
+
+<h1>About Us</h1>
+    <div class="about">
+        {% for about in abouts %}
+            <h2>{{ about.heading }}</h2>
+            <p>{{ about.paragraph }}</p>
+        {% endfor %}
+    </div>
+<br>
+<h1>Our Services</h1>
+    <div class="services">
+        {% for service in services %}
+            <p><a href="{% url 'page_detail' slug=service.page.slug %}">{{ service.text }}</a></p>
+        {% endfor %}
+    </div>
+    <br>
+<h2>Contact Us</h2>
+<form method="post"  id="myForm" onsubmit="return showMessage(event)" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+<div id="successMessage" class="message">
+    <p>Thank you for your submission!</p>
+    <button onclick="resetForm()">Reset Form</button>
+</div>
+<br>
+<footer>
+    <div class="footer-logo">
+        {% if footers %}
+            <img src="{{ footers.0.logo.url }}" alt="Footer Logo" width="100" height="auto">
+        {% endif %}
+    </div>
+    <div class="footer-address">
+        {% if footers %}
+            <p>{{ footers.0.address }}</p>
+        {% endif %}
+    </div>
+    <div class="footer-links">
+        {% for footer in footers %}
+            <ul>
+                {% for link in footer.links.all %}
+                    <li><a href="{{ link.link_url }}">{{ link.link_text }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+    <br>
+    <section id="testimonials">
+        <h2>Testimonials</h2>
+        <div class="testimonials-container">
+            {% for testimonial in testimonials %}
+                <div class="testimonial">
+                    <h3>{{ testimonial.name }}</h3>
+                    <h4>{{ testimonial.organization }}</h4>
+                    <p>{{ testimonial.review }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+</footer>
+<script>
+    function showMessage(event) {
+        event.preventDefault(); // Prevent form submission
+        document.getElementById('myForm').style.display = 'none'; // Hide the form
+        document.getElementById('successMessage').style.display = 'block'; // Show the success message
+        return false;
+    }
+
+    function resetForm() {
+        document.getElementById('myForm').reset(); // Reset the form fields
+        document.getElementById('myForm').style.display = 'block'; // Show the form again
+        document.getElementById('successMessage').style.display = 'none'; // Hide the success message
+        
+    }
+      // Initially hide the success message
+      document.getElementById('successMessage').style.display = 'none';
+</script>
+   
+</body>
+</html>

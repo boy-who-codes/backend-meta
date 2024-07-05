@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% block meta %}
+{{ block.super }}
+{% endblock %}
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<header class="header-section">
+    <p class="lead" style="width: 50%;" data-aos="fade-down">WE UNDERSTAND YOUR TARGETING NEEDS</p>
+    <h1 class="display-2" style="width: 80%;"data-aos="fade-up">Marketing Without Data Is Like Driving With Your Eyes Closed
+      </h1>
+      <p class="mb-4" style="color: #8B49FF; font-weight: 400;"data-aos="fade-up">- Dan Zarrella</p>
+    <p class="mb-4" style="max-width: 60%;"data-aos="fade-down">An amalgamation of Technology Marketers, Sales Professionals, Data Analysts and Account Managers working in conjunction to understand your targeting needs and provide 
+      value to your business.</p>
+      <a href="why-meta-insyt" class=" custom-btn btn-dark" data-aos="fade-up">Get Started<span class="arrow"></span></a>
+  </header>
+<!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||[Client section]||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+<section class="centered-section">
+  <p style="color: #918E8E; font-weight: 600;" data-aos="fade-down">Trusted by Leading Companies.</p>
+
+</section>
+<section class="clients-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="clients-container" data-aos="fade-up">
+          {% for client in clients %}
+          <div class="client-logo"><img src="{{ client.image.url }}" alt="{{ client.name }}" width="100" height="auto"></div>
+
+    {% endfor %}
+    {% for client in clients %}
+    <div class="client-logo"><img src="{{ client.image.url }}" alt="{{ client.name }}" width="100" height="auto"></div>
+
+{% endfor %}
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<br>
+<!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||[ABout US]|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+<section class="centered-section" id="about">
+  <p style="color: #918E8E; font-weight: 600;" data-aos="fade-down">About Us</p>
+  <h1 class="mt-4" data-aos="fade-up">Competitive Market Intelligence And Technographics Infused With A Ton Of Customization Options</h1>
+</section>
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||[2x2 Grid]|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<section class="container my-5">
+  <div class="row">
+    <div class="col-md-6 mb-4">
+  
+
+  {% for about in abouts %}
+      <div class="heading-container">
+        <h2 data-aos="fade-right">{{ about.heading }}</h2>
+      </div>
+      <p data-aos="fade-up"> {{ about.paragraph }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||[NUMBER]||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+
+<section class="numbers-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 number-item" >
+        {% for number in numbers %}
+       
+   
+        <div class="number"data-aos="fade-down">{{ number.number }}</div>
+        <p class="number-description"data-aos="fade-up">{{ number.text }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||[Services]|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<section class="centered-section">
+  <p style="color: #918E8E; font-weight: 600;"data-aos="fade-down">Services</p>
+  <h1 class="mt-4" data-aos="fade-up">What Do We Offer?</h1>
+</section>
+<!--|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||[2x2 Grid]|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<section class="container my-5" style="width: 90%;">
+  <div class="row">
+    {% for service in services %}
+    <div class="col-md-6 mb-4" >
+      <div class="heading-container">
+        <h2 data-aos="fade-right"><a href="{% url 'page_detail' slug=service.page.slug %}" style="text-decoration: none; color: #fff;">{{ service.text }}</a></h2>
+      </div>
+    </div>       
+        {% endfor %}
+
+  </div>
+</section>
+<!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||[Contact Fomr]|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="heading">
+        <h1 data-aos="fade-right">Contact Us</h1>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="contact-form" data-aos="fade-left">
+    
+        <form id="contactForm" method="POST">
+          {% csrf_token %}
+          <!-- Your form fields here -->
+          <div class="mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" required>
+          </div>
+          <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" required>
+          </div>
+          <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+          <div class="mb-3">
+              <label for="message" class="form-label">Message</label>
+              <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="custom-btn btn-dark">Send</button>
+          <button type="reset" class="custom-btn btn-dark ms-2">Reset</button>
+      </form>
+      
+      <!-- JavaScript to handle form submission feedback -->
+   
+      
+      </div>
+    </div>
+   
+  </div>
+</div>
+<!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||[WHAT CLIENT SAYS]|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+<div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for testimonial in testimonials %}
+    <div class="carousel-item active">
+      <div class="testimonial" >
+        <h4 data-aos="fade-up">{{ testimonial.review }}</h4>
+        <br>
+        <p data-aos="fade-down">-{{ testimonial.name }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" style="color: #fff;" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" style="color: #fff;" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+{% endblock %}

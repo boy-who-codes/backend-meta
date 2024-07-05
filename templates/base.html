@@ -1,0 +1,198 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+ 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Meta Tags -->
+      {% block meta %}
+      {% if seo.meta_description %}
+          <meta name="description" content="{{ seo.meta_description }}">
+      {% endif %}
+      {% if seo.meta_keywords %}
+          <meta name="keywords" content="{{ seo.meta_keywords }}">
+      {% endif %}
+      {% if seo.meta_author %}
+          <meta name="author" content="{{ seo.meta_author }}">
+      {% endif %}
+  
+      <!-- Open Graph (OG) Tags -->
+      {% if seo.og_title %}
+          <meta property="og:title" content="{{ seo.og_title }}">
+      {% endif %}
+      {% if seo.og_description %}
+          <meta property="og:description" content="{{ seo.og_description }}">
+      {% endif %}
+      {% if seo.og_image %}
+          <meta property="og:image" content="{{ seo.og_image.url }}">
+      {% endif %}
+  
+      <!-- Favicon and Apple Touch Icon -->
+      {% if seo.favicon %}
+          <link rel="icon" href="{{ seo.favicon.url }}" type="image/x-icon">
+      {% endif %}
+      {% if seo.apple_touch_icon %}
+          <link rel="apple-touch-icon" href="{{ seo.apple_touch_icon.url }}">
+      {% endif %}
+  
+      <!-- PWA Settings -->
+      {% if seo.pwa_enabled %}
+          <meta name="theme-color" content="#ffffff">
+          <meta name="application-name" content="{{ seo.pwa_name }}">
+          <meta name="apple-mobile-web-app-title" content="{{ seo.pwa_short_name }}">
+          <meta name="apple-mobile-web-app-capable" content="yes">
+          <meta name="apple-mobile-web-app-status-bar-style" content="default">
+          <link rel="manifest" href="manifest.json">
+          {% if seo.pwa_icon %}
+              <link rel="icon" type="image/png" href="{{ seo.pwa_icon.url }}">
+          {% endif %}
+      {% endif %}
+  
+      <!-- Custom Head Tags -->
+      {% if seo.custom_head_tags %}
+          {{ seo.custom_head_tags|safe }}
+      {% endif %}
+  {% endblock %}
+
+    <title>{% block title %}Bootstrap demo{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preload" href="{% static 'assets/img/bg.png' %}" as="image">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+      body {
+        background-image: url("{% static 'assets/img/bg.png' %}");
+        color: #fff;
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+        overflow-x: hidden;
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-top sticky-top" data-bs-theme="dark" fixed-top style="color: #fff;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+          {% if footers %}
+            <img src="{{ footers.0.logo.url }}" alt="Footer Logo" width="150" height="24" data-aos="fade-right">
+        {% endif %}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            {% for menu_link in menu_links %}
+            {% if menu_link.has_submenu %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="/{{ menu_link.get_link_url }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ menu_link.title }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" style="background-color: #151515;"data-aos="fade-down">
+                        {% for submenu_link in menu_link.submenus.all %}
+                            <li><a class="dropdown-item " href="/{{ submenu_link.get_link_url }}">{{ submenu_link.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/{{ menu_link.link_url }}">{{ menu_link.title }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="https://x.com/metainsyt?s=21&amp;t=1rkjVH-xXB5c0hR-dhrrnw"><i class="fab fa-twitter"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="https://www.linkedin.com/company/meta-insyt-llc/about/"><i class="fab fa-linkedin"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="footer mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-3 d-flex justify-content-center align-items-center logo mb-3 mb-md-0">
+            <a href="/" class="d-flex align-items-center link-dark text-decoration-none">
+              {% if footers %}
+            <img src="{{ footers.0.logo.url }}" alt="Footer Logo" data-aos="fade-right" >
+        {% endif %}
+              
+            </a>
+          </div>
+          <div class="col-12 col-md-3 mb-3 mb-md-0">
+            <h5>Address</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2">
+                {% if footers %}
+                <p data-aos="fade-down">{{ footers.0.address }}</p>
+            {% endif %}
+                
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-3 mb-3 mb-md-0">
+            <h5>Section</h5>
+            <ul class="nav flex-column">
+              {% for footer in footers %}
+              
+                  {% for link in footer.links.all %}
+                  <li class="nav-item mb-2"><a href="{{ link.link_url }}" class="nav-link p-0" data-aos="fade-down">{{ link.link_text }}</a></li>
+                    
+                  {% endfor %}
+              
+          {% endfor %}
+             
+            </ul>
+          </div>
+          <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+            <div>
+              <a href="https://x.com/metainsyt?s=21&amp;t=1rkjVH-xXB5c0hR-dhrrnw" target="_blank" style="text-decoration: none;"><i class="fab fa-twitter"></i></a> &nbsp;
+              <a href="https://www.linkedin.com/company/meta-insyt-llc/about/" target="_blank" style="text-decoration: none;"><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <center style="color: #918E8E;">
+        <b>&copy; All right reserved. Meta Insyt LLC <script>document.write(new Date().getFullYear());</script></b>
+      </center>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+      window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 0) {
+          navbar.classList.add('navbar-scrolled');
+          navbar.classList.remove('navbar-transparent');
+        } else {
+          navbar.classList.add('navbar-transparent');
+          navbar.classList.remove('navbar-scrolled');
+        }
+      });
+    </script>
+    <script>
+      AOS.init();
+    </script>
+    <script>
+      var myCarousel = new bootstrap.Carousel(document.getElementById('testimonialCarousel'), {
+        interval: 5000,
+        wrap: true,
+        pause: 'hover'
+      });
+    </script>
+  </body>
+</html>

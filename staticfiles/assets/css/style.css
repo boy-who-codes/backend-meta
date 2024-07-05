@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/*BACKGROUND*/
+
+body {
+  background-image: url('../img/bg.png');
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  scroll-behavior: smooth;
+}
+.navbar {
+  transition: background-color 0.3s ease;
+  color: #fff;
+}
+nav {
+  position: sticky;
+  top: 0;
+}
+.navbar-transparent {
+  background-color: transparent !important;
+}
+.navbar-scrolled {
+  background-color: #151515 !important;
+}
+.nav-link a{
+  color: #fff;
+}
+.header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 100vh;
+}
+.custom-btn {
+  background-color: #1515157d;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.custom-btn .arrow {
+  display: inline-block;
+  margin-left: 8px;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  transform: rotate(45deg);
+}
+.custom-btn:hover{
+  background-color: #fff;
+  color: #151515;
+}
+/*Clients Section*/
+.clients-section {
+
+  padding: 40px 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+.clients-container {
+  display: flex;
+  width: calc(100% * 2); /* Two times the viewport width to make an endless loop */
+  animation: scroll 20s linear infinite;
+}
+.client-logo {
+  flex: 0 0 auto;
+  width: 200px;
+  padding: 0 15px;
+}
+.client-logo img {
+  max-width: 100%;
+  height: auto;
+}
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/*CENTER SECTION*/
+.centered-section {
+  max-width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.heading-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.heading-container::before {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 35px;
+  border-radius: 20px;
+  background-color: #975EF3;
+  margin-right: 15px;
+}
+
+.numbers-section {
+  color: #fff;
+  padding: 40px 0;
+  text-align: center;
+}
+.number-item {
+  margin-bottom: 20px;
+}
+.number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+.number-description {
+  color: #fff;
+}
+
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px;
+  
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.contact-form .form-control,
+.contact-form textarea {
+  background-color: transparent; /* Transparent background */
+  border-color: #ffffff; /* White border color */
+  color: #ffffff; /* White text color */
+}
+
+.contact-form .btn-primary,
+.contact-form .btn-secondary {
+  background-color: #007bff; /* Primary and secondary button color */
+  border-color: #007bff; /* Primary and secondary button border color */
+  color: #ffffff; /* Button text color */
+}
+
+.contact-form .btn-primary:hover,
+.contact-form .btn-secondary:hover {
+  background-color: #0056b3; /* Primary and secondary button color on hover */
+  border-color: #0056b3; /* Primary and secondary button border color on hover */
+}
+
+.heading {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%; /* Ensures the heading occupies full height of the column */
+}
+
+.testimonial {
+  text-align: center;
+  padding: 40px;
+  opacity: 0.8;
+}
+
+.testimonial h2{
+  color: #fff;
+  font-weight: 500;
+}
+.testimonial p {
+  font-style: italic;
+  font-size: 1.2rem;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  filter: invert(100%);
+}
+
+/*Footer*/
+footer a {
+  color:#fff;
+  padding: 20px 0;
+}
+.footer a:hover{
+  color: #fff;
+  text-decoration: none;
+}
+.footer {
+
+  color: #fff;
+  padding: 20px 0;
+}
+.footer .logo img {
+  max-width: 100px;
+}
+.footer h5 {
+  color: #fff;
+}
+.footer .nav-link {
+  color: #fff;
+}
+
+.content-blog{
+  width: 100%; /* Adjust width as per your layout */
+  max-width: 100%; /* Ensure content does not exceed its container */
+  word-wrap: break-word; /* Allow long words to break and wrap */
+  white-space: pre-wrap; /* Preserve white space and wrap lines as necessary */
+  overflow-wrap: break-word; /* Ensure content wraps at word breaks */
+  overflow: hidden; /* Hide any content that exceeds container height */
+  margin: auto;
+}
