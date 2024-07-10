@@ -44,7 +44,7 @@ def lead_form(request):
             # Add your file download handling code here
 
             # Redirect or render a success page
-            return redirect('success_page')  # Replace 'success_page' with your actual success page or URL name
+            return redirect('lead_form')  # Replace 'success_page' with your actual success page or URL name
 
     else:
         form = LeadForm()

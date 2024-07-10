@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-yrju(eh1dx^n)kli9ugy2stb90asos82s79y1nxe*n(b&1ax7#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.200.139:8080' , '*']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -54,6 +54,7 @@ CKEDITOR_CONFIGS = {
     },
 }
 MIDDLEWARE = [
+    
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -62,6 +63,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     'django.middleware.gzip.GZipMiddleware',  # Compress content
+    'django.middleware.cache.UpdateCacheMiddleware',  # Cache updates
+    'django.middleware.cache.FetchFromCacheMiddleware',  # Cache fetching
 ]
 
 ROOT_URLCONF = 'src.urls'
@@ -154,8 +158,7 @@ if settings.DEBUG:
     ]
     STATIC_ROOT = BASE_DIR / "staticfiles"
 
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
+
 else:
     STATIC_URL = '/static/'
     STATICFILES_DIRS = [
@@ -163,8 +166,15 @@ else:
     ]
     STATIC_ROOT = BASE_DIR / "staticfiles"
 
+   
+
+if settings.DEBUG:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
+else:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+    
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -173,3 +183,54 @@ EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
 EMAIL_HOST_USER = 'e3514f3e949a6e'
 EMAIL_HOST_PASSWORD = 'bed5ca276e3fe8'
 EMAIL_PORT = '2525'
+
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # Store sessions in cache
+SESSION_COOKIE_AGE = 1209600  # Two weeks
+SESSION_SAVE_EVERY_REQUEST = True
+
+
+# SECURE_BROWSER_XSS_FILTER = True
+# X_FRAME_OPTIONS = 'DENY'
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# SECURE_HSTS_SECONDS = 31536000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+
+# SECURE_SSL_REDIRECT = True  # Redirect all non-HTTPS requests to HTTPS
+# SECURE_BROWSER_XSS_FILTER = True  # Enable browser's XSS filtering
+# SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent the browser from guessing the MIME type
+# SECURE_HSTS_SECONDS = 31536000  # Enable HTTP Strict Transport Security (HSTS)
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True  # Preload HSTS
+# SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'  # Set Referrer-Policy header
+# SESSION_COOKIE_SECURE = True  # Use secure cookies for the session
+# CSRF_COOKIE_SECURE = True  # Use secure cookies for CSRF
+# X_FRAME_OPTIONS = 'DENY'  # Prevent the site from being rendered in a frame
+
+# settings.py
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

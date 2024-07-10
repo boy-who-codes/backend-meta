@@ -73,7 +73,34 @@
         font-style: normal;
         overflow-x: hidden;
       }
+      .clients-container {
+    display: flex;
+    justify-content: center; /* Center align horizontally */
+    align-items: center; /* Center align vertically */
+}
+
+.client-logos {
+    display: flex;
+    justify-content: center; /* Center align horizontally */
+    align-items: center; /* Center align vertically */
+}
+
+.client-logo {
+    margin: 0 10px; /* Adjust spacing between logos */
+    max-width: 120px; /* Set maximum width for the logos */
+    height: auto; /* Ensure images maintain aspect ratio */
+}
+
+.client-logo img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
     </style>
+    
   </head>
   <body>
 
@@ -81,7 +108,7 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="/">
           {% if footers %}
-            <img src="{{ footers.0.logo.url }}" alt="Footer Logo" width="150" height="45" data-aos="fade-right" style="margin-left: 15px;">
+            <img src="{{ footers.0.logo.url }}" alt="Footer Logo" width="150" height="40" style="margin-left: 19px;">
         {% endif %}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,6 +116,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/about-us">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/why-meta-insyt">Why Meta-Insyt</a>
+        </li>
             {% for menu_link in menu_links %}
             {% if menu_link.has_submenu %}
                 <li class="nav-item dropdown">
@@ -97,7 +130,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" style="background-color: #151515;"data-aos="fade-down">
                         {% for submenu_link in menu_link.submenus.all %}
-                            <li><a class="dropdown-item " href="/{{ submenu_link.get_link_url }}">{{ submenu_link.title }}</a></li>
+                            <li><a class="dropdown-item " href="/{{ submenu_link.get_link_url }}"><i class="fa-solid fa-caret-right"></i> {{submenu_link.title }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>
@@ -107,6 +140,7 @@
                 </li>
             {% endif %}
         {% endfor %}
+      
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="https://x.com/metainsyt?s=21&amp;t=1rkjVH-xXB5c0hR-dhrrnw"><i class="fab fa-twitter"></i></a>
             </li>
@@ -144,7 +178,7 @@
             </ul>
           </div>
           <div class="col-12 col-md-3 mb-3 mb-md-0">
-            <h5>Section</h5>
+            <h5>Important Links</h5>
             <ul class="nav flex-column">
               {% for footer in footers %}
               

@@ -27,6 +27,85 @@ def base(request):
                                             'seo': seo_settings,
                                           })
     
+# def index(request):
+#     seo_settings = SEO.objects.first()  # Fetch SEO settings
+#     footers = Footer.objects.all()
+#     menu_links = MenuLink.objects.filter(parent_link__isnull=True).order_by('order')
+#     clients = ClientLogo.objects.all()
+#     numbers = Numbers.objects.all()
+#     abouts = About.objects.all()
+#     services = Services.objects.all()
+#     testimonials = Testimonial.objects.all()
+#     contact =  ContactMessage.objects.all()
+#     form_submitted = False  # Initialize form submission status
+
+#     if request.method == 'POST':
+#         form = ContactForm(request.POST)
+#         if form.is_valid():
+#             # Save contact message to database
+#             contact_message = ContactMessage(
+#                 first_name=form.cleaned_data['first_name'],
+#                 last_name=form.cleaned_data['last_name'],
+#                 email=form.cleaned_data['email'],
+#                 message=form.cleaned_data['message']
+#             )
+#             contact_message.save()
+
+#     #         # Send email notification
+#     #         send_mail(
+#     #             'Contact Form Submission',
+#     #             form.cleaned_data['message'],
+#     #             form.cleaned_data['email'],
+#     #             ['your_email@example.com'],  # List of recipients
+#     #             fail_silently=False,
+#     #         )
+
+#     #         form_submitted = True  # Update form submission status
+#     # else:
+#     #     form = ContactForm()
+#             # Prepare email
+            
+#             subject = 'New Contact Message'
+#             from_email = settings.DEFAULT_FROM_EMAIL
+#             recipient_list = ['rahulsinhaoff@gmail.com']  # Change to your recipient email(s)
+
+#             context = {
+#                 'contact': contact_message
+#             }
+
+#             # Render the email template with the context
+#             message = render_to_string('email/contact.html', context)
+#             email = EmailMessage(subject, message, from_email, recipient_list)
+#             email.content_subtype = 'html'  # Important to set the content type to HTML
+#               # Send email
+          
+           
+#             email.send()
+#             form_submitted = True
+#             print (email)
+#             # Handle file download (if any logic is needed here)
+#             # Add your file download handling code here
+
+#             # Redirect or render a success page
+#             # return redirect('success_page')  # Replace 'success_page' with your actual success page or URL name
+#             return "EMAIL SENT"
+#     else:
+#         form = ContactForm()
+
+#     # Render the index.html template with context data
+#     return render(request, 'index.html', {
+#         'form': form,
+#         'clients': clients,
+#         'numbers': numbers,
+#         'abouts': abouts,
+#         'services': services,
+#         'testimonials': testimonials,
+#         'menu_links': menu_links,
+#         'footers': footers,
+#         'seo': seo_settings,
+#         'form_submitted': form_submitted,  # Pass form submission status to template
+#     })
+###################################################################################
 def index(request):
     seo_settings = SEO.objects.first()  # Fetch SEO settings
     footers = Footer.objects.all()
@@ -36,7 +115,7 @@ def index(request):
     abouts = About.objects.all()
     services = Services.objects.all()
     testimonials = Testimonial.objects.all()
-
+    contact = ContactMessage.objects.all()
     form_submitted = False  # Initialize form submission status
 
     if request.method == 'POST':
@@ -51,20 +130,7 @@ def index(request):
             )
             contact_message.save()
 
-    #         # Send email notification
-    #         send_mail(
-    #             'Contact Form Submission',
-    #             form.cleaned_data['message'],
-    #             form.cleaned_data['email'],
-    #             ['your_email@example.com'],  # List of recipients
-    #             fail_silently=False,
-    #         )
-
-    #         form_submitted = True  # Update form submission status
-    # else:
-    #     form = ContactForm()
             # Prepare email
-            
             subject = 'New Contact Message'
             from_email = settings.DEFAULT_FROM_EMAIL
             recipient_list = ['rahulsinhaoff@gmail.com']  # Change to your recipient email(s)
@@ -77,18 +143,14 @@ def index(request):
             message = render_to_string('email/contact.html', context)
             email = EmailMessage(subject, message, from_email, recipient_list)
             email.content_subtype = 'html'  # Important to set the content type to HTML
-              # Send email
-          
-           
-            email.send()
-            form_submitted = True
-            print (email)
-            # Handle file download (if any logic is needed here)
-            # Add your file download handling code here
 
-            # Redirect or render a success page
-            # return redirect('success_page')  # Replace 'success_page' with your actual success page or URL name
-            return "EMAIL SENT"
+            try:
+                email.send()
+                form_submitted = True
+            except Exception as e:
+                print(f"Error sending email: {e}")
+
+            return redirect('/')  # Replace 'success_page' with your actual success page or URL name
     else:
         form = ContactForm()
 
@@ -104,8 +166,7 @@ def index(request):
         'footers': footers,
         'seo': seo_settings,
         'form_submitted': form_submitted,  # Pass form submission status to template
-    })
-    
+    })    
 # views.py
 
 from django.shortcuts import render
